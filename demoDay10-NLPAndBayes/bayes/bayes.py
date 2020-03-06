@@ -64,7 +64,7 @@ def ComputeModel():
         # 某类别的频率
         ClassProb[classid] = ClassFreq[classid]/float(doc_num)
     for classid in ClassFeatDict.keys():
-        # 对未出现过的词进行平滑处理+1
+        # 对未出现过的词进行平滑处理+1 (类别文章数+类别单词数)*0.1
         new_sum = float(ClassFreq[classid]+len(ClassFeatDict[classid])) * DefautFreq
         for wid in ClassFeatDict[classid].keys():
             ClassFeatDict[classid][wid] = (ClassFeatDict[classid][wid]+DefautFreq)/new_sum
