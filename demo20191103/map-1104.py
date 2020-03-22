@@ -17,4 +17,4 @@ for line in sys.stdin:
         for wd in wd_list:
             wd = dealWord(wd)
             if wd:
-                print "\t".join([wd, '1'])
+                print( "\t".join([wd, '1']))
