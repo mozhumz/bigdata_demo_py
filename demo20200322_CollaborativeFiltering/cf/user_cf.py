@@ -71,7 +71,7 @@ def recommend(user,train_data,C,k=5):
                 continue
             elif rank.get(i,-1) == -1:
                 rank[i] = 0
-            # 物品的打分是①用户相似度[0-1]*②用户相似用户对电影的打分[0-5]=[0-1]
+            # 物品的打分是①用户相似度[0-1]*②相似用户对电影的打分[0-5]=[0-1]
             # 相似用户评论了同一个物品是累加操作
             rank[i] += cuv * rating
     return rank
