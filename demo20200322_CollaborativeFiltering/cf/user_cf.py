@@ -84,3 +84,4 @@ if __name__ == '__main__':
     user_id = '196'
     rank = recommend(user_id,train_data,C)
     print(sorted(rank.items(),key=lambda x:x[1],reverse=True)[:10])
+    # [('100', 6.241226030138492), ('204', 4.6451259221991), ('211', 4.143786182755323), ('56', 4.13879680827505), ('603', 4.041840955842541)]
