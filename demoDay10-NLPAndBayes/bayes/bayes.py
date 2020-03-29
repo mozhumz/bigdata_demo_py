@@ -1,3 +1,12 @@
+'''
+预测某篇文章属于哪个类别：
+1 根据训练集（每篇文章有对应的一个类别）
+遍历每篇文章，计算文章总数，各类别下的文章数，每篇文章再遍历单词，计算各类别下各单词词频
+2 计算各类别的占比=各类别下的文章数/文章总数 计算各类别各单词的占比（即得到训练模型）
+3 给定测试集（要测试的文章数，已知每篇文章属于哪个类别），
+根据训练模型，遍历文章，遍历单词，遍历类别，计算每篇测试文章所有单词，在不同类别的汇总得分，筛选出得分最高的类别
+4 准确度=预测对的文章数/总测试文章数
+'''
 import os
 import math
 # 训练，测试数据路径
@@ -15,10 +24,10 @@ word_dict = os.path.join(ModelPath,'word_dict.model')
 初始化参数
 '''
 
-ClassFeatDict = dict()  # xj和yi的矩阵 count  各类别下各单词词频
+ClassFeatDict = dict()  # k=类别id v=dict(k=单词id v=单词占比)  各类别下各单词词频
 # ClassFeatProb = dict()  # 概率
-ClassFreq = dict()  # p(yi),数组  各类别的文章数
-ClassProb = dict()
+ClassFreq = dict()  # p(yi),数组 k=类别id  v=各类别的文章数
+ClassProb = dict() # k=类别id v=类别概率
 ClassDefaultProb = dict() # 未出现词的默认概率，每个类别都不一样
 DefautFreq = 0.1
 WordDic = set()  #单词id集合
@@ -50,6 +59,7 @@ def LoadData():
                 WordDic.add(wid)
                 if ClassFeatDict[classid].get(wid, -1) == -1:
                     ClassFeatDict[classid][wid] = 0
+                # 单词词频
                 ClassFeatDict[classid][wid] += 1
             doc_num += 1
     print(ClassFeatDict)
@@ -61,12 +71,13 @@ def LoadData():
 def ComputeModel():
     global doc_num
     for classid in ClassFreq.keys():
-        # 某类别的频率
+        # 某类别的概率
         ClassProb[classid] = ClassFreq[classid]/float(doc_num)
     for classid in ClassFeatDict.keys():
         # 对未出现过的词进行平滑处理+1 (类别文章数+类别单词数)*0.1
         new_sum = float(ClassFreq[classid]+len(ClassFeatDict[classid])) * DefautFreq
         for wid in ClassFeatDict[classid].keys():
+            # 某类别单词的占比
             ClassFeatDict[classid][wid] = (ClassFeatDict[classid][wid]+DefautFreq)/new_sum
         ClassDefaultProb[classid]=float(DefautFreq)/new_sum
 

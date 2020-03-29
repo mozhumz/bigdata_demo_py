@@ -14,11 +14,12 @@ from demo20200322_CollaborativeFiltering.hyj.util import get_train_data
 正常逻辑的用户相似度计算
 '''
 train_data = get_train_data()
-# key=用户id value=dict（k=用户id v=用户相似度）
+#用户相似度-方法一  key=用户id value=dict（k=用户id v=用户相似度）
 sim_dic = dict()
+#用户相似度-方法二
 sim_dic2 = dict()
 
-
+# jaccard公式：相似度=交集size/并集size
 def normal_user_sim():
     for u in train_data.keys():
         if sim_dic.get(u, -1) == -1:
@@ -41,7 +42,7 @@ for u, items in train_data.items():
         if item_users.get(i, -1) == -1:
             item_users[i] = set()
         item_users[i].add(u)
-# sim_dic2 计算相同的电影数量
+#sim_dic2 用户间相同的电影数量
 for i, users in item_users.items():
     for u in users:
         if sim_dic2.get(u, -1) == -1:
@@ -78,6 +79,7 @@ for u, sim in sim_users:
     for i in train_data[u].keys():
         if i in watched: continue
         if rank.get(i, -1) == -1: rank[i]=0
+        # 物品打分=用户相似度*电影打分
         rank[i] += sim * train_data[u][i]
 
 print(sorted(rank.items(),key=lambda x:x[1],reverse=True)[:k])
