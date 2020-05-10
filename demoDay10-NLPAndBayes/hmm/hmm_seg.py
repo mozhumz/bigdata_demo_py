@@ -28,8 +28,8 @@ def viterbi(sentence,sep=' '):
     ch_num = len(ch_lst)
 
     # 初始化状态矩阵
-    # 三维数组 最外层为行状态M，每行是单字符串数组，
-    # 数组第一个元素为发射概率*初始状态概率 第二个元素为状态的下标
+    # 三维数组 最外层为行状态M（这里共四个状态：BMES），每行是单字符串数组，
+    # 数组每个元素有2个属性，第一个为发射概率*初始状态概率 第二个为状态的下标
     status_matrix = [[[0.0,0] for col in range(ch_num)] for row in range(STATUS_NUM)]
 
     # 状态种类M个  m*1

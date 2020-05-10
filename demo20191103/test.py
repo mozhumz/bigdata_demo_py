@@ -35,6 +35,6 @@ def validateTitle( title):
 
 s=""
 if s:
-    print str(s!="")
+    print(str(s != ""))
 else:
-    print "jj"
+    print("jj")
