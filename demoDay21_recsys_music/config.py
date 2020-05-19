@@ -20,6 +20,8 @@ def music_data(nrows=None):
     del df_music_meta['desc']
     return df_music_meta
 
+musicdata=music_data(500)
+print(musicdata.head())
 
 def user_profile(nrows=None):
     user_profile = os.path.join(data_path, 'user_profile.data')
@@ -29,13 +31,13 @@ def user_profile(nrows=None):
                        names=['user_id', 'gender', 'age', 'salary', 'province'])
 
 
+
 def user_watch(nrows=None):
     user_watch_pref = os.path.join(data_path, 'user_watch_pref.sml')
     return pd.read_csv(user_watch_pref,
                        sep='\001',
                        nrows=nrows,
                        names=['user_id', 'item_id', 'stay_seconds', 'hour'])
-
 # #########路径配置#################
 train_file = '%s/train_dict.txt' % music_mid_data_path
 

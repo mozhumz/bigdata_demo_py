@@ -17,12 +17,40 @@ def music_data(nrows=None):
     del data['desc']
     return data
 
+# 读取用户信息
 def user_profile(nrows=None):
     user_meta=os.path.join(data_path,'user_profile.data')
-    return pd.read_csv(user_meta,nrows=nrows,sep=',',names=['user_id','gender','age','salary','province'])
+    return pd.read_csv(user_meta,nrows=nrows,sep=',',names=['user_id','gender','age','salary','province'],
+                       dtype={'user_id':str,'gender':str,'age':str,'salary':str,'province':str})
 
 # print(user_profile(10))
 
+# 读取用户听过的音乐
 def user_watch(nrows=None):
     data=os.path.join(data_path,'user_watch_pref.sml')
-    pd.read_csv(data,nrows=nrows,names=[],sep='')
+    return pd.read_csv(data,nrows=nrows,names=['user_id','item_id','stay_seconds','hour'],sep='\001',
+                       dtype={'user_id':str,'item_id':str,'stay_seconds':int,'hour':int})
+
+# print(user_watch(10))
+
+# #########路径配置#################
+train_file = '%s/train_dict.txt' % music_mid_data_path
+
+# 相似度矩阵存储路径
+user_user_sim_file = '%s/sim_data/uu.sim' % music_mid_data_path
+item_item_sim_file = '%s/sim_data/ii.sim' % music_mid_data_path
+
+# 最终候选集存储
+cf_rec_lst_outfile = '%s/reclst.dict' % music_mid_data_path
+
+# 交叉特征存储
+cross_file = '%s/cross_feat.dict' % music_mid_data_path
+
+# one-hot编码映射表
+user_feat_map_file = '%s/feat/one_hot.dict' % music_mid_data_path
+# model储存
+model_file = '%s/models/lr.model' % music_mid_data_path
+
+# 不同召回策略标识
+UCF_PREFIX = 'UCF_'
+ICF_PREFIX = 'ICF_'
