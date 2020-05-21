@@ -1,7 +1,7 @@
 import demoDay21_recsys_music.gen_cf_data as gcd
 import demoDay21_recsys_music.config as conf
-from sklearn.cross_validation import train_test_split
 # python3.7已经废弃
+# from sklearn.cross_validation import train_test_split
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import pandas as pd
@@ -62,7 +62,31 @@ del data['label']
 
 # # 特征处理
 # 1. 离散特征one-hot处理（word2vec->embedding[continuous]）
+# df数据结构 ：
+# age_0-18	age_19-25	age_26-35	age_36-45	age_46-100	gender_女	gender_男	salary_0-2000	salary_10000-20000	salary_2000-5000	...	province_香港	province_黑龙江	location_-	location_亚洲	location_国内	location_日韩	location_日韩,日本	location_日韩,韩国	location_欧美	location_港台
+# 0	0	0	1	0	0	1	0	0	1	0	...	1	0	0	0	0	0	0	0	0	1
+# 1	0	0	0	1	0	1	0	0	0	0	...	0	0	0	0	0	0	0	0	0	1
+# 2	0	0	0	1	0	0	1	0	0	1	...	0	0	0	0	0	0	0	0	0	1
+# 3	0	1	0	0	0	1	0	0	0	1	...	0	0	0	0	0	0	0	0	0	1
+# 4	0	0	0	1	0	0	1	0	1	0	...	0	0	0	0	0	0	0	0	0	1
 df = pd.get_dummies(data[category_feat])  # 特征_特征值
+
+# one-hot数据结构
+# Index(['age_0-18', 'age_19-25', 'age_26-35', 'age_36-45', 'age_46-100',
+#        'gender_女', 'gender_男', 'salary_0-2000', 'salary_10000-20000',
+#        'salary_2000-5000', 'salary_20000-100000', 'salary_5000-10000',
+#        'province_上海', 'province_云南', 'province_内蒙古', 'province_北京',
+#        'province_台湾', 'province_吉林', 'province_四川', 'province_天津',
+#        'province_宁夏', 'province_安徽', 'province_山东', 'province_山西',
+#        'province_广东', 'province_广西', 'province_新疆', 'province_江苏',
+#        'province_江西', 'province_河北', 'province_河南', 'province_浙江',
+#        'province_海南', 'province_湖北', 'province_湖南', 'province_澳门',
+#        'province_甘肃', 'province_福建', 'province_西藏', 'province_贵州',
+#        'province_辽宁', 'province_重庆', 'province_陕西', 'province_青海',
+#        'province_香港', 'province_黑龙江', 'location_-', 'location_亚洲',
+#        'location_国内', 'location_日韩', 'location_日韩,日本', 'location_日韩,韩国',
+#        'location_欧美', 'location_港台'],
+#       dtype='object')
 one_hot_columns = df.columns  # ['gender_男'，'gender_女'...]
 # print(df.head())
 # 2.连续特征不处理直接带入[一般做离散GBDT（xgboost）叶子结点做离散化编码 GBDT+LR]

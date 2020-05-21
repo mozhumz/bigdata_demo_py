@@ -1,5 +1,5 @@
-import cf.user_cf as uc
-import cf.item_cf as ic
+import demoDay21_recsys_music.cf.user_cf as uc
+import demoDay21_recsys_music.cf.item_cf as ic
 import demoDay21_recsys_music.config as conf
 
 UCF_PREFIX = conf.UCF_PREFIX

@@ -15,7 +15,7 @@ def music_data(nrows=None):
                                 # Pandas只有在整个文件读取完了才能确定字段的dtype（字段的数据类型dType）这会很耗时间
                                 # 事先指定dtype，则会按照指定的dtype读取数据，从而解决警告：
                                 # DtypeWarning: Columns (3) have mixed types. Specify dtype option on import or set low_memory=False.
-                                dtype={'item_id':int,'item_name':str,'desc':str,'total_timelen':str,'tags':str})
+                                dtype={'item_id':int,'item_name':str,'desc':str,'total_timelen':str,'location':str,'tags':str})
     df_music_meta = df_music_meta.fillna('-')
     del df_music_meta['desc']
     return df_music_meta

@@ -1,7 +1,9 @@
-import demoDay21_recsys_music.config_hyj as conf
+import demoDay21_recsys_music.hyj.config_hyj as conf
 import os
+'''生成训练数据 k=user_id v={item_id:score}'''
 train_file = conf.train_file
 
+# 获取用户对物品的打分 df[user_id item_id score]
 def user_item_socre(nrows=100,tag='sum'):
     # 读取音乐元数据
     music_data=conf.music_data()
