@@ -44,7 +44,7 @@ with open(item_item_sim_file,mode='w',encoding='utf-8') as f:
 # 根据物品相似度获取推荐物品
 for user_id in train.keys():
     rank=ic.recommendation(train,user_id,item_item_sim,10)
-    user_id=UCF_PREFIX+user_id
+    user_id=ICF_PREFIX+user_id
     rec_list[user_id]=sorted(rank.items(),key=lambda x:x[1],reverse=True)[0:20]
 
 del item_item_sim

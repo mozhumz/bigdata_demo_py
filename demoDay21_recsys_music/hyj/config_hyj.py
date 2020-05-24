@@ -52,6 +52,21 @@ user_feat_map_file = '%s/feat/one_hot.dict' % music_mid_data_path
 # model储存
 model_file = '%s/models/lr.model' % music_mid_data_path
 
+res_file='%s/out/res.txt' % music_mid_data_path
+
 # 不同召回策略标识
 UCF_PREFIX = 'UCF_'
 ICF_PREFIX = 'ICF_'
+
+if __name__ == '__main__':
+    x=float('nan')
+    print(type(x))
+    # music_df=music_data()
+    # row=music_df['item_id'].head()[0]
+    #
+    # print(type(row))
+    # # print(type(row['item_id']))
+    # # music_df['item_id'].astype(str)
+    # music_df2=music_df.loc[music_df['item_id']=='867100256',:]
+    # print(1)
+    # print(music_df2)

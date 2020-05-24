@@ -119,7 +119,7 @@ print(score)
 
 #存储特征map
 feat_map=dict()
-for i in len(one_hot_cols):
+for i in range(len(one_hot_cols)):
     key=one_hot_cols[i]
     feat_map[key]=i
 
