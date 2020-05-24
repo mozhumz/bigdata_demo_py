@@ -108,3 +108,13 @@ with open(res_file,mode='w',encoding='utf-8') as f:
 # 排序
 res_sort_list=sorted(res_list,key=lambda x:x[2],reverse=True)
 print(res_sort_list)
+
+with open(res_file,mode='r',encoding='utf-8') as f:
+    res_sort_list=eval(f.read(res_sort_list))
+
+# topN
+filter_lst=res_sort_list[:5]
+
+
+res=['=>'.join([item_id,item_name,str(final_score),explain]) for item_id,item_name,final_score,explain in filter_lst]
+print(res)

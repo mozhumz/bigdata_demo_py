@@ -45,7 +45,7 @@ del data['label']
 # 2	0	0	0	1	0	0	1	0	0	1	...	0	0	0	0	0	0	0	0	0	1
 # 3	0	1	0	0	0	1	0	0	0	1	...	0	0	0	0	0	0	0	0	0	1
 # 4	0	0	0	1	0	0	1	0	1	0	...	0	0	0	0	0	0	0	0	0	1
-# get_dummies one-hot处理: 将每列展开成多列(根据每列的所有取值,如性别 gender取值有男女 则展开为gender_女	gender_男)
+# get_dummies one-hot处理: 将每列展开成多列,有值的为1，否则为0(根据每列的所有取值,如用户性别男 gender取值有男女 则展开为gender_女 0	gender_男 1)
 df=pd.get_dummies(data[dispersed_feat])
 # 离散特征数组
 # one-hot数据结构
