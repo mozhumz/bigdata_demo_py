@@ -38,9 +38,13 @@ for i, items in C.items():
         C[i][j] = float(C[i][j]) / len(N[i] | N[j])
 
 # 根据用户喜欢的物品，查找前k个相似物品
-k = 5
-uid = '196'
-items = train_data[uid].items()
+k = 50
+uid = '385'
+map=train_data[uid]
+items = map.items()
+print(items)
+print("--------------------------------------")
+
 # 相似电影集合 k=itemId v=相似度
 reco = dict()
 for i, rating in items:
@@ -48,10 +52,13 @@ for i, rating in items:
     if C.get(i, -1) == -1:
         continue
     for j in C[i].keys():
-        if j in items: continue
+        if j in map.keys(): continue
         if reco.get(j, -1) == -1:
             reco[j] = 0.0
         reco[j] += (C[i][j] * rating)
 
 
 print(sorted(reco.items(), key=lambda x: x[1], reverse=True)[:k])
+
+# [('69', 183.3237202232321), ('179', 180.91082330946145), ('196', 179.2279600694895), ('202', 176.44636140456382),
+# ('96', 175.9423151702241), ('64', 175.0024976417742),
