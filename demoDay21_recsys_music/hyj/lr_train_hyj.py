@@ -78,7 +78,7 @@ for _,row in data[['ui-key','score']].iterrows():
 cross_file=conf.cross_file
 util.mkdirs(cross_file)
 
-with open(cross_file,mode='w',encoding='utf-8')as xf:
+with open(cross_file,mode='w',encoding='utf-8') as xf:
     xf.write(str(cross_feat_map))
 
 

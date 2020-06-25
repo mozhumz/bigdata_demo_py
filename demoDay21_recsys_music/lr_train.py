@@ -4,6 +4,8 @@ import demoDay21_recsys_music.config as conf
 # from sklearn.cross_validation import train_test_split
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
+
 import pandas as pd
 
 # 特征映射表，交叉特征，模型  输出
@@ -162,6 +164,7 @@ Logistic回归的目的是寻找一个非线性函数Sigmoid的最佳拟合参�
 model = lr.fit(X_train, y_train)
 print('w:%s, b:%s' % (lr.coef_, lr.intercept_))
 print('score: %.4f' % lr.score(X_test, y_test))
+
 
 # 存储特征map[key(字段名+'_'+字段值)：index]
 feat_map = {}
