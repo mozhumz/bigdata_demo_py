@@ -3,7 +3,9 @@ import os
 # 存储一切对应代码的配置信息，主要的配置信息在这个文件中进行修改
 
 # 原始数据路径
-data_path = 'G:\\idea_workspace\\bigdata\\bigdata_demo_py\\demoDay21_recsys_music\\data\music_data'
+# F:\\idea_workspace\\bigdata\\bigdata_demo_py\\demoDay21_recsys_music\\data
+# 'G:\\idea_workspace\\bigdata\\bigdata_demo_py\\demoDay21_recsys_music\\data\music_data'
+data_path = 'F:\\idea_workspace\\bigdata\\bigdata_demo_py\\demoDay21_recsys_music\\data\\music_data'
 # 中间数据路径
 music_mid_data_path = "../data/music_mid_data_hyj"
 test_path ="%s/test/test.txt" % "../data/music_mid_data_hyj2"
@@ -61,7 +63,8 @@ ICF_PREFIX = 'ICF_'
 if __name__ == '__main__':
     x=float('nan')
     print(type(x))
-    # music_df=music_data()
+    music_df=music_data()
+    print('ok')
     # row=music_df['item_id'].head()[0]
     #
     # print(type(row))

@@ -6,6 +6,7 @@ from sklearn.linear_model import LogisticRegression
 import common.common_util as util
 
 data=gen.user_item_socre(nrows=50000)
+
 # 定义label stay_seconds/total_timelen>0.9 -> 1
 data['label']=data['score'].apply(lambda x:1 if x>=0.9 else 0)
 # 关联用户信息和item信息到data

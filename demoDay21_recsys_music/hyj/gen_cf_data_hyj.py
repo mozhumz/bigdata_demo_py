@@ -24,7 +24,6 @@ def user_item_socre(nrows=100,tag='sum'):
         data=data.groupby(['user_id','item_id'])['score'].sum().reset_index()
     elif tag=='avg' or 'mean':
         data=data.groupby(['user_id','item_id']).score.mean().reset_index()
-
     return data
 
 #将df数据转为字典dict key=user_id value={key:item_id,value:score}
