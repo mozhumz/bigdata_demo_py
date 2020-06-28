@@ -33,6 +33,7 @@ def score2Label(score):
     return 0
 labels=data['label']=data['score'].apply(score2Label)
 
+
 print(labels)
 '''
 离散特征 one-hot处理
