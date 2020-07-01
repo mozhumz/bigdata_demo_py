@@ -11,6 +11,31 @@ def create_data_set():
 
     return data_set, cols
 
+def create_data_set2():
+    data_set = [['青年', '高', 'yes'],
+                ['青年', '高', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '低', 'yes'],
+                ['青年', '低', 'yes'],
+                ['中年', '高', 'yes'],
+                ['中年', '高', 'yes'],
+                ['中年', '高', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '低', 'no'],
+                ['老年', '高', 'yes'],
+                ['老年', '中', 'no'],
+                ['老年', '低', 'no'],
+                ['老年', '低', 'no'],
+                ]
+    cols = ['age', 'salary']
+
+    return data_set, cols
 
 #  计算熵
 def calc_ent(data_set):
@@ -101,13 +126,13 @@ def create_tree(data_set, cols):
     unique_vals = set(feat_values)
     # 用特征值划分数据集
     for value in unique_vals:
-        subcols = cols
+        subcols = cols[:]
         my_tree[best_feat_label][value] = create_tree(split_data_set(data_set, best_feat, value), subcols)
     return my_tree
 
 
 if __name__ == '__main__':
-    data_set, cols = create_data_set()
+    data_set, cols = create_data_set2()
     treeModel = create_tree(data_set, cols)
     print(treeModel)
-
+#     {'age': {'老年': {'salary': {'高': 'yes', '低': 'no', '中': 'no'}}, '中年': {'salary': {'高': 'yes', '低': 'no', '中': 'no'}}, '青年': 'yes'}}
