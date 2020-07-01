@@ -2,12 +2,28 @@ import math
 
 
 def create_data_set():
-    data_set = [[1, 1, 'yes'],
-                [1, 1, 'yes'],
-                [1, 0, 'no'],
-                [0, 1, 'no'],
-                [0, 1, 'no']]
-    cols = ['no surfacing', 'flippers']
+    data_set = [['青年', '高', 'yes'],
+                ['青年', '高', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '中', 'yes'],
+                ['青年', '低', 'yes'],
+                ['青年', '低', 'yes'],
+                ['中年', '高', 'yes'],
+                ['中年', '高', 'yes'],
+                ['中年', '高', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '中', 'no'],
+                ['中年', '低', 'no'],
+                ['老年', '高', 'yes'],
+                ['老年', '中', 'no'],
+                ['老年', '低', 'no'],
+                ['老年', '低', 'no'],
+                ]
+    cols = ['age', 'salary']
 
     return data_set, cols
 
@@ -48,7 +64,7 @@ def calc_ent(data_set):
         label_cnt[cur_label] += 1
 
     E = 0.0
-    for key in label_cnt:
+    for key in label_cnt.keys():
         prob = float(label_cnt[key]) / n
         # 以e为底
         E -= prob * math.log(prob)
@@ -126,7 +142,7 @@ def create_tree(data_set, cols):
     unique_vals = set(feat_values)
     # 用特征值划分数据集
     for value in unique_vals:
-        subcols = cols[:]
+        subcols = cols
         my_tree[best_feat_label][value] = create_tree(split_data_set(data_set, best_feat, value), subcols)
     return my_tree
 

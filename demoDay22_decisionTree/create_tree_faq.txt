@@ -1,0 +1,46 @@
+1 data_set:[age,salary,y] cols=[age,salary]
+ best_feat_label='age'
+ my_tree = {'age': {}}
+ unique_vals=['青年'，‘中年’，‘老年’]
+  for:
+     青年：
+      def:
+      subcols=【salary】
+      my_tree['age'][青年]=create_tree():
+       data_set:[salary,y] cols=[salary]
+       best_feat_label='salary'
+       my_tree = {'salary': {}}
+       unique_vals=['高'，中，低]
+        for:
+            青年-高：
+                subcols=【】
+                my_tree['salary'][高]=create_tree():
+                    data_set=[y] cols=[]
+                    return y=1||y=0
+
+            青年-中：
+                    subcols=【】
+                    my_tree['salary'][中]=create_tree():
+                        data_set=[y] cols=[]
+                        return y=1||y=0
+
+            青年-低：
+                    subcols=【】
+                    my_tree['salary'][高]=create_tree():
+                        data_set=[y] cols=[]
+                        return y=1||y=0
+
+        return my_tree
+        my_tree['age'][青年]={'salary': {‘高’：1，‘中’：1，‘低’：2}}
+
+    中年：
+     def:
+        return my_tree
+        my_tree['age'][中年]={'salary': {‘高’：1，‘中’：1，‘低’：2}}
+
+    老年：
+     def:
+        return my_tree
+        my_tree['age'][老年]={'salary': {‘高’：1，‘中’：1，‘低’：2}}
+
+  return my_tree
