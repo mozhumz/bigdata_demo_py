@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 import lightgbm as lgb
 from datetime import datetime
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 
 # pip install xgboost,lightgbm,sklearn  anaconda3
-IDIR = 'D://data//data//'
+IDIR = 'G://bigdata//badou//00-data//'
 df_train = pd.read_csv(IDIR + 'train_feat.csv').fillna(0.).to_sparse()
 labels = np.load(IDIR + 'labels.npy')
 

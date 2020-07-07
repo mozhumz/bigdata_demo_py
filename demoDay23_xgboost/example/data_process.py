@@ -4,10 +4,10 @@ import numpy as np
 '''
 Load Data
 '''
-IDIR = 'D://data//data//'
+IDIR = 'G://bigdata//badou//00-data//'
 priors = pd.read_csv(IDIR + 'order_products__prior.csv', dtype={
-    'order_id': np.int32,
-    'product_id': np.int16,
+    'order_id': str,
+    'product_id': str,
     'add_to_cart_order': np.int16,
     'reordered': np.int8})
 train = pd.read_csv(IDIR + 'order_products__train.csv', dtype={
@@ -57,6 +57,11 @@ orders.set_index('order_id', inplace=True, drop=False)
 # 将所有order信息关联到priors中
 priors = priors.join(orders, on='order_id', rsuffix='_')
 # 有重复的列的后缀，‘_’
+'''
+axis=1表示跨列 axis=0表示跨行 删除行时axis=0
+inplace = True：不创建新的对象，直接对原始对象进行修改；
+inplace = False：对数据进行修改，创建并返回新的对象承载其修改结果
+'''
 priors.drop('order_id_', inplace=True, axis=1)
 
 # 3. user feature
