@@ -42,6 +42,7 @@ print('xgb time cost: ', execution_time_lgbm / 1000)
 # 对测试集进行预测
 dtest = xgb.DMatrix(X_test)
 ans = model.predict(dtest)
+
 #
 # 计算准确率
 cnt1 = 0.

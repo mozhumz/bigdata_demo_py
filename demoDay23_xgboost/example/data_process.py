@@ -33,7 +33,6 @@ print('priors {}: {}'.format(priors.shape, ', '.join(priors.columns)))
 print('orders {}: {}'.format(orders.shape, ', '.join(orders.columns)))
 print('train {}: {}'.format(train.shape, ', '.join(train.columns)))
 
-
 '''
 Feature Process
 '''
@@ -94,7 +93,7 @@ priors['user_product'] = priors.product_id + priors.user_id * 100000
 d = dict()
 for row in priors.itertuples():
     z = row.user_product
-    #组合key不在字典d中初始化
+    # 组合key不在字典d中初始化
     if z not in d:
         # 1：user_product cnt，
         # 2：获取最近一个订单（订单顺序（最后一个订单），订单id（且订单id最大）），
@@ -125,7 +124,7 @@ train_orders = orders[orders.eval_set == 'train']
 # train数据以(order_id,product_id)为key
 train.set_index(['order_id', 'product_id'], inplace=True, drop=False)
 
-
+#传入 train_orders
 def features(selected_orders, labels_given=False):
     print('build candidate list')
     order_list = []
@@ -146,6 +145,7 @@ def features(selected_orders, labels_given=False):
         # 如果给label，即为train，此时label：如果pair（order_id,product_id）在train中为1，否则为0
         # train中给定的是对应订单，购买的产品。
         if labels_given:
+            # 循环判断(order_id, product)是否在train.index中
             labels += [(order_id, product) in train.index for product in user_products]
 
     df = pd.DataFrame({'order_id': order_list, 'product_id': product_list}, dtype=np.int32)
@@ -154,6 +154,7 @@ def features(selected_orders, labels_given=False):
     del product_list
 
     print('user related features')
+    # map方法：df.order_id每行的值order_id对应orders的索引，且取orders中对应索引的user_id
     df['user_id'] = df.order_id.map(orders.user_id)
     df['user_total_orders'] = df.user_id.map(users.nb_orders)
     df['user_total_items'] = df.user_id.map(users.total_items)
@@ -195,6 +196,7 @@ def features(selected_orders, labels_given=False):
     print(df.memory_usage())
     return df, labels
 
+
 f_to_use = ['user_total_orders', 'user_total_items', 'total_distinct_items',
             'user_average_days_between_orders', 'user_average_basket',
             'order_hour_of_day', 'days_since_prior_order', 'days_since_ratio',
@@ -204,7 +206,6 @@ f_to_use = ['user_total_orders', 'user_total_items', 'total_distinct_items',
             'UP_delta_hour_vs_last']
 
 df_train, labels = features(train_orders, labels_given=True)
-print('Train Columns:',df_train.columns)
-df_train[f_to_use].to_csv(IDIR+'train_feat.csv',index=False)
-np.save(IDIR+'labels.npy',labels)
-
+print('Train Columns:', df_train.columns)
+df_train[f_to_use].to_csv(IDIR + 'train_feat.csv', index=False)
+np.save(IDIR + 'labels.npy', labels)
