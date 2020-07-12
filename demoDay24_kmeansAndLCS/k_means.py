@@ -5,13 +5,13 @@ import operator
 import re
 from collections import Counter
 
-K = 10  # 设定类别数量（簇）
+# K = 10  # 设定类别数量（簇）
 WCSS = 0.0  # 初始化wcss
 new_WCSS = 1  # 初始化
 threshold = 1e-6  # 认为不变动的阈值 0.000001
-ITER_MAX = 20  # 设定最大迭代次数
+ITER_MAX = 10  # 设定最大迭代次数
 
-file_path = './data'  # 数据路径
+file_path = 'G://bigdata//badou//00-data//data'  # 数据路径
 
 label_dict = {'business': 0, 'yule': 1, 'it': 2, 'sports': 3, 'auto': 4}
 
@@ -91,7 +91,7 @@ def doc_tf_idf():
     return doc_dict, doc_label
 
 
-def init_K(doc_dict, doc_list):
+def init_K(doc_dict, doc_list,K=3):
     '''
     初始化K个中心点，随机选择样本点为中心点
     :param doc_dict: 样本数据，每个doc是一条样本
@@ -140,7 +140,7 @@ def compute_center(doc_list, doc_dict):
                 tmp_center[wid] += doc_dict[doc][wid]
 
     for wid in tmp_center.keys():
-        tmp_center[wid] /= len(doc_label)
+        tmp_center[wid] /= len(doc_list)
     return tmp_center
 
 
@@ -157,21 +157,22 @@ def all_k_dist(doc_list, doc_dict, k_dict):
         sum += compute_dis(doc_dict[doc], k_dict)
     return sum
 
-
-if __name__ == '__main__':
-    # 读取数据，获得每篇文章中单词的tf-idf值
-    doc_dict, doc_label = doc_tf_idf()
+'''
+# key=k+迭代次数 v=wscc
+'''
+def do_kmeans(wcss_d,k_count):
+    print('k_count'+str(k_count))
+    global WCSS, new_WCSS
     # 初始化K个中心点到样本上
-    center_dict = init_K(doc_dict, doc_label.keys())
+    center_dict = init_K(doc_dict, doc_label.keys(),k_count)
     # 初始化doc所属类别，在k=0的中心点上
     doc_k = dict(zip(doc_label.keys(), [0 for i in range(len(doc_label.keys()))]))
-
     iter_num = 0
     Center_mv = 1
     k_doc = dict()
-
     WCSS_sub = 1
     print('start train!!')
+    wcss_list_d=dict()
     # 算法循环终止条件,只要有其中一个条件不满足跳出循环
     while WCSS_sub > threshold and iter_num < ITER_MAX and Center_mv > threshold:
         k_doc = dict()
@@ -190,7 +191,7 @@ if __name__ == '__main__':
 
         # step 2: 重新计算中心点
         Center_mv = 0
-
+        # WCSS赋值
         WCSS = 0 if new_WCSS == 0 else new_WCSS
         new_WCSS = 0
         for k in k_doc.keys():
@@ -203,9 +204,25 @@ if __name__ == '__main__':
             # 更新k中心点坐标
             center_dict[k] = tmp_k_center
         WCSS_sub = abs(new_WCSS - WCSS)
-        print(iter_num, WCSS_sub, Center_mv+"\t WCSS: "+new_WCSS)
+        # 存储迭代次数和wcss
+        wcss_list_d[iter_num]=new_WCSS
+        print(iter_num, WCSS_sub, str(Center_mv) + "\t WCSS: " + str(new_WCSS))
         iter_num += 1
+
+    # 存储每次迭代的Wcss
+    k_w=sorted(wcss_list_d.items(),key=lambda x:x[1])[0]
+    wcss_d[k_count]=k_w
     # write doc-> cluster
     for k in k_doc.keys():
         cluster_doc_wc = Counter([doc_label.get(doc_name) for doc_name in k_doc[k]])
-        print(sorted(cluster_doc_wc.items(), key=lambda x:x[1], reverse=True))
+        print(sorted(cluster_doc_wc.items(), key=lambda x: x[1], reverse=True))
+
+
+if __name__ == '__main__':
+    # 读取数据，获得每篇文章中单词的tf-idf值
+    doc_dict, doc_label = doc_tf_idf()
+    # key=k v=[item_num,wcss]
+    wcss_d=dict()
+    for i in range(1,9):
+        do_kmeans(wcss_d,i)
+    print(sorted(wcss_d.items(),key=lambda x:x[1][1]))
