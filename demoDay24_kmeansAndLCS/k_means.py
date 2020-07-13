@@ -9,9 +9,9 @@ from collections import Counter
 WCSS = 0.0  # 初始化wcss
 new_WCSS = 1  # 初始化
 threshold = 1e-6  # 认为不变动的阈值 0.000001
-ITER_MAX = 10  # 设定最大迭代次数
+ITER_MAX = 30  # 设定最大迭代次数
 
-file_path = 'G://bigdata//badou//00-data//data'  # 数据路径
+file_path = 'F://八斗学院//视频//14期正式课//00-data//data'  # 数据路径
 
 label_dict = {'business': 0, 'yule': 1, 'it': 2, 'sports': 3, 'auto': 4}
 
@@ -98,6 +98,7 @@ def init_K(doc_dict, doc_list,K=3):
     :param doc_list: 样本数据doc名
     :return:
     '''
+    print('K:'+str(K))
     center_dict = dict()
     k_doc_list = random.sample(doc_list, K)
     i = 0
@@ -175,6 +176,7 @@ def do_kmeans(wcss_d,k_count):
     wcss_list_d=dict()
     # 算法循环终止条件,只要有其中一个条件不满足跳出循环
     while WCSS_sub > threshold and iter_num < ITER_MAX and Center_mv > threshold:
+        tmp_loss=0
         k_doc = dict()
         # 对每一个样本算到所有k中心点的距离 ，样本点归属离哪个中心点最近归属哪个中心点的类别
         for doc in doc_label.keys():
@@ -183,6 +185,7 @@ def do_kmeans(wcss_d,k_count):
                 tmp_select_k[k] = compute_dis(doc_dict[doc], center_dict[k])
             # (k, val) = sorted(tmp_select_k.items(), key=operator.itemgetter(1))[0]
             (k, val) = min(tmp_select_k.items(), key=operator.itemgetter(1))
+            tmp_loss+=val
             doc_k[doc] = k
             if k_doc.get(k, -1) == -1:
                 k_doc[k] = [doc]
@@ -206,7 +209,7 @@ def do_kmeans(wcss_d,k_count):
         WCSS_sub = abs(new_WCSS - WCSS)
         # 存储迭代次数和wcss
         wcss_list_d[iter_num]=new_WCSS
-        print(iter_num, WCSS_sub, str(Center_mv) + "\t WCSS: " + str(new_WCSS))
+        print(iter_num, WCSS_sub, str(Center_mv) + "\t WCSS: " + str(new_WCSS),'tmp_loss:'+str(tmp_loss))
         iter_num += 1
 
     # 存储每次迭代的Wcss
@@ -221,8 +224,11 @@ def do_kmeans(wcss_d,k_count):
 if __name__ == '__main__':
     # 读取数据，获得每篇文章中单词的tf-idf值
     doc_dict, doc_label = doc_tf_idf()
+    f1='1business'
+    f2='1yule'
+    print(compute_dis(doc_dict[f1],doc_dict[f2]))
     # key=k v=[item_num,wcss]
     wcss_d=dict()
-    for i in range(1,9):
+    for i in range(3,9):
         do_kmeans(wcss_d,i)
     print(sorted(wcss_d.items(),key=lambda x:x[1][1]))

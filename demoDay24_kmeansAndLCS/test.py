@@ -66,3 +66,19 @@ d1=sorted(wcss_d.items(),key=lambda x:(x[1][1],x[0]))
 d2=d1[:4]
 d2.sort(key=lambda x:x[0])
 print(d2)
+
+import re
+label_pattern = re.compile(r'[a-z]+')
+res=label_pattern.findall('adb12hy44tt 45dd 99oo rrd tt')
+print(res)
+K=3
+doc_dict={'1':{'1':1},'2':{'2':2},'3':{3:3},4:{4:4}}
+doc_dict2={'1':{'1':1},'2':{'2':2},'3':{3:3},45:{4:4}}
+union_set=set(doc_dict)|set(doc_dict2)
+print(union_set)
+# rs=random.sample(doc_dict.keys(),K)
+# # print(rs)
+# for item in doc_dict.items():
+#     print(item[1])
+
+
