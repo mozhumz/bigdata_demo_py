@@ -65,5 +65,8 @@ a = [
     [1, 3]]  # 1
 
 
-with tf.Session() as sess:
-    print(sess.run(tf.argmax(a, axis=0)))
+# with tf.Session() as sess:
+#     print(sess.run(tf.argmax(a, axis=0)))
+
+b=(0,)
+print(b)
