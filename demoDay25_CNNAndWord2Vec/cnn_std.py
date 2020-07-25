@@ -4,14 +4,14 @@
 # tf = tf2.compat.v1
 # tf.disable_eager_execution()
 # from __future__ import absolute_import, division, print_function, unicode_literals
-
+# tf2版本
 import tensorflow as tf
 
 from tensorflow.keras import datasets, layers, models
-# gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
 # cpus = tf.config.experimental.list_physical_devices(device_type='CPU')
 # print(gpus, cpus)
-# tf.config.experimental.set_visible_devices(devices=gpus[2:4], device_type='GPU')
+tf.config.experimental.set_visible_devices(devices=gpus[2:4], device_type='GPU')
 
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data(path='G:\\bigdata\\badou\\00-data\\MNIST')
 train_images = train_images.reshape((60000, 28, 28, 1))

@@ -39,6 +39,11 @@ b_conv1 = bias_variable([32])
 # 取到的是one_hot形式的图片，即在一个数组中
 x = tf.placeholder(tf.float32, shape=[None, 784])
 # reshape将数组转化成28*28矩阵大小，即图片
+'''
+这里是将一组图像矩阵x重建为新的矩阵，该新矩阵的维数为（a，28，28，1），其中-1表示a由实际情况来定。 
+例如，x是一组图像的矩阵（假设是50张，大小为56×56），则执行x_image = tf.reshape(x, [-1, 28, 28, 1])
+可以计算a=50×56×56/28/28/1=200。即x_image的维数为（200，28，28，1）
+'''
 x_image = tf.reshape(x, [-1, 28, 28, 1])
 
 # ############### model #################
@@ -49,7 +54,7 @@ h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)  # 32个28*28 feature m
 h_pool1 = max_pool_2x2(h_conv1)  # 32个14*14 feature maps
 
 # 第二层：这里为什么是channel=32？
-# 因为上一层生成了32个feature map，channel=1（原始图片channel）*32（feature map数量）
+# 因为上一层生成了32个feature map，channel=1（原始图片channel）*32（feature map数量） 64表示要生成的feature map数量
 W_conv2 = weight_variable([5, 5, 32, 64])
 b_conv2 = bias_variable([64])
 

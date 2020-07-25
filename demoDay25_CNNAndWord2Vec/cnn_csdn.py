@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-
+# tf1.9
 mnist = input_data.read_data_sets('F:\\八斗学院\视频\\14期正式课\\00-data\\MNIST', one_hot=True)
 
 #每个批次的大小
