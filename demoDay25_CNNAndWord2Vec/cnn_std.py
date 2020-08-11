@@ -13,7 +13,7 @@ gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
 # print(gpus, cpus)
 tf.config.experimental.set_visible_devices(devices=gpus[2:4], device_type='GPU')
 
-(train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data(path='G:\\bigdata\\badou\\00-data\\MNIST')
+(train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data("F:\\八斗学院\\视频\\14期正式课\\00-data\\mnist2/")
 train_images = train_images.reshape((60000, 28, 28, 1))
 test_images = test_images.reshape((10000, 28, 28, 1))
 # 特征缩放[0, 1]区间

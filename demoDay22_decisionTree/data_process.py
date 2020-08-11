@@ -4,12 +4,13 @@ import numpy as np
 '''
 Load Data
 '''
-IDIR = 'D://data//data//'
+IDIR = 'F:\\八斗学院\\视频\\14期正式课\\00-data//'
 priors = pd.read_csv(IDIR + 'order_products__prior.csv', dtype={
     'order_id': np.int32,
     'product_id': np.uint16,
     'add_to_cart_order': np.int16,
     'reordered': np.int8})
+# 用户倒数第二天购买的商品
 train = pd.read_csv(IDIR + 'order_products__train.csv', dtype={
     'order_id': np.int32,
     'product_id': np.uint16,
@@ -55,7 +56,7 @@ del prods
 print('add order info to priors')
 # 以orders的order_id为主key
 orders.set_index('order_id', inplace=True, drop=False)
-# 将所有order信息关联到priors中
+# 将所有order信息关联到priors中 rsuffix表示相同列名合并后右表的列名追加_
 priors = priors.join(orders, on='order_id', rsuffix='_')
 priors.drop('order_id_', inplace=True, axis=1)
 
@@ -106,7 +107,9 @@ print('to dataframe (less memory)')
 # 将dict转dataframe
 userXproduct = pd.DataFrame.from_dict(d, orient='index')
 del d
+# 设置列名
 userXproduct.columns = ['nb_orders', 'last_order_id', 'sum_pos_in_cart']
+# 列类型转换
 userXproduct.nb_orders = userXproduct.nb_orders.astype(np.int16)
 userXproduct.last_order_id = userXproduct.last_order_id.map(lambda x: x[1]).astype(np.int32)
 userXproduct.sum_pos_in_cart = userXproduct.sum_pos_in_cart.astype(np.int16)
@@ -115,7 +118,9 @@ del priors
 
 # 5. 从orders中划分训练集和测试集
 print('split orders : train, test')
-test_orders = orders[orders.eval_set == 'test']
+# 用户最后一天购买的订单
+# test_orders = orders[orders.eval_set == 'test']
+# 用户倒数第二天购买的订单
 train_orders = orders[orders.eval_set == 'train']
 # train数据以(order_id,product_id)为key
 train.set_index(['order_id', 'product_id'], inplace=True, drop=False)
