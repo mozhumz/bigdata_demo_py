@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error #均方误差
 from sklearn.metrics import mean_absolute_error #平方绝对误差
 from sklearn.metrics import r2_score#R square

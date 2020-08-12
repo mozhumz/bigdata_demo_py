@@ -75,7 +75,7 @@ users['total_items'] = priors.groupby('user_id').size().astype(np.int16)
 users['all_products'] = priors.groupby('user_id')['product_id'].apply(set)
 # 用户去重商品数量
 users['total_distinct_items'] = (users.all_products.map(len)).astype(np.int16)
-
+# 默认使用索引连接
 users = users.join(usr)
 del usr
 # 用户平均一个订单的商品数量
@@ -100,6 +100,7 @@ for row in priors.itertuples():
                 row.add_to_cart_order)
     else:
         d[z] = (d[z][0] + 1,
+                # tuple比较时 返回第一个元素位置的最大tuple
                 max(d[z][1], (row.order_number, row.order_id)),
                 d[z][2] + row.add_to_cart_order)
 
@@ -120,7 +121,7 @@ del priors
 print('split orders : train, test')
 # 用户最后一天购买的订单
 # test_orders = orders[orders.eval_set == 'test']
-# 用户倒数第二天购买的订单
+# 用户倒数第二天购买的订单（近期的购买数据）
 train_orders = orders[orders.eval_set == 'train']
 # train数据以(order_id,product_id)为key
 train.set_index(['order_id', 'product_id'], inplace=True, drop=False)
