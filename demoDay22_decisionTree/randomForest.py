@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error #均方误差
 from sklearn.metrics import mean_absolute_error #平方绝对误差
 from sklearn.metrics import r2_score#R square
 
-IDIR = 'D://data//data//'
+IDIR = 'F:\\八斗学院\\视频\\14期正式课\\00-data//'
 df_train = pd.read_csv(IDIR + 'train_feat.csv').fillna(0.).to_sparse()
 print(df_train)
 labels = np.load(IDIR + 'labels.npy')
@@ -21,9 +21,13 @@ del labels
 # dt = DecisionTreeClassifier()
 
 rfr = RandomForestRegressor(n_estimators=10,
+                            #
                             criterion="mse",
+                            # 树的深度
                             max_depth=None,
+                            # 一个叶子节点要分裂 需要的最小样本量
                             min_samples_split=200,
+                            # 一个叶子节点要存在 需要的最小样本量 即每个叶子节点的最小样本量
                             min_samples_leaf=100,
                             min_weight_fraction_leaf=0.,
                             max_features="auto",

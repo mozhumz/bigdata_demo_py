@@ -1,11 +1,13 @@
 import pandas as pd
 import math
 import numpy as np
+import time
 df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
                               'Parrot', 'Parrot'],
                    'Max Speed': [380., 370., 24., 26.],
                    'Col_c':['c1','c2','c3','c4']
                    })
+
 #
 # # print(df)
 #
@@ -61,6 +63,9 @@ print('----------------')
 print('s',s)
 print('----------------')
 # df1['name'] = df1['id'].map(s).fillna(df1['name']).astype(str)
-print(df1['id'].map(s))
-print('----------------')
-print(df1['id'].map(s).fillna(df1['name']).astype(str))
+# print(df1['id'].map(s))
+# print('----------------')
+# print(df1['id'].map(s).fillna(df1['name']).astype(str))
+# start_ms=time.time()
+# print('ms:',time.time()-start_ms)
+print(3/9)
