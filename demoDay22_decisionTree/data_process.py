@@ -1,10 +1,13 @@
 import pandas as pd
 import numpy as np
+import time
 
+start_time=time.time()
+print('start_time:',start_time)
 '''
 Load Data
 '''
-IDIR = 'F:\\八斗学院\\视频\\14期正式课\\00-data//'
+IDIR = 'G:\\bigdata\\badou\\00-data//'
 priors = pd.read_csv(IDIR + 'order_products__prior.csv', dtype={
     'order_id': np.int32,
     'product_id': np.uint16,
@@ -86,7 +89,7 @@ print('user f', users.shape)
 print('compute userXproduct f - this is long...')
 # user_id+product_id的组合key
 priors['user_product'] = priors.product_id + priors.user_id * 100000
-
+print('priors:',priors[:10])
 d = dict()
 for row in priors.itertuples():
     z = row.user_product
@@ -105,6 +108,7 @@ for row in priors.itertuples():
                 d[z][2] + row.add_to_cart_order)
 
 print('to dataframe (less memory)')
+print('mid_time:',time.time()-start_time)
 # 将dict转dataframe
 userXproduct = pd.DataFrame.from_dict(d, orient='index')
 del d
@@ -115,6 +119,7 @@ userXproduct.nb_orders = userXproduct.nb_orders.astype(np.int16)
 userXproduct.last_order_id = userXproduct.last_order_id.map(lambda x: x[1]).astype(np.int32)
 userXproduct.sum_pos_in_cart = userXproduct.sum_pos_in_cart.astype(np.int16)
 print('user X product f', len(userXproduct))
+print('uXp:',userXproduct[:10])
 del priors
 
 # 5. 从orders中划分训练集和测试集
@@ -209,3 +214,4 @@ print('Train Columns:',df_train.columns)
 df_train[f_to_use].to_csv(IDIR+'train_feat.csv',index=False)
 np.save(IDIR+'labels.npy',labels)
 
+print('end_time:',time.time()-start_time)

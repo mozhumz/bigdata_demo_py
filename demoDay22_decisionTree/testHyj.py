@@ -7,6 +7,27 @@ df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
                    'Max Speed': [380., 370., 24., 26.],
                    'Col_c':['c1','c2','c3','c4']
                    })
+df1 = pd.DataFrame({'Animal': ['Falcon-df1', 'Falcon-df1',
+                              'Parrot-df1', 'Parrot-df1'],
+                   'id':[1,2,3,4]
+                   })
+df2 = pd.DataFrame({'Animal2': ['Falcon-df2', 'Falcon-df2',
+                               'Parrot-df2', 'Parrot-df2'],
+                    'id':[1,2,3,4]
+                    })
+
+df1['id']=df1['id'].apply(lambda x:str(x)+'_')
+df2['id']=df2['id'].apply(lambda x:str(x)+'_')
+df1=pd.merge(df1,df2,on='id')
+print(df1)
+
+# df1.set_index('id',drop=False,inplace=True)
+# df2.set_index('id',drop=False,inplace=True)
+# print(df1)
+# df1.id=df1.id.astype(np.int32)
+# # df1的id去匹配df2的index
+# df1['Animal2']=df1.id.map(df2.Animal2)
+print(df1.dtypes)
 
 #
 # # print(df)
@@ -38,12 +59,12 @@ df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
 # train=['2','3']
 # labels += [(order_id, product) in train for product in user_products]
 # print(labels)
-arr1=np.array(["1","2","3"],dtype=np.str)
+# arr1=np.array(["1","2","3"],dtype=np.str)
 # print(arr1)
 # print('abc'+(arr1[0]))
 
-print(df)
-df.set_index('Col_c',drop=False,inplace=True)
+# print(df)
+# df.set_index('Col_c',drop=False,inplace=True)
 # print(df[0])
 # for idx,row in df.iterrows():
 #     print(row['Col-c'])
