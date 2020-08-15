@@ -1,7 +1,6 @@
 import pandas as pd
 import math
 import numpy as np
-import time
 df = pd.DataFrame({'Animal': ['Falcon', 'Falcon',
                               'Parrot', 'Parrot'],
                    'Max Speed': [380., 370., 24., 26.],
@@ -75,18 +74,15 @@ print(df1.dtypes)
 
 # print(df.Animal['c1'])
 
-df1=pd.DataFrame({'id':[1,2,3],'name':['Andy1','Jacky1','Bruce1']})
-df2=pd.DataFrame({'id':[1,2],'name':['Andy2','Jacky2']})
-
-s = df2.set_index('id')['name']
-print('df1',df1)
-print('----------------')
-print('s',s)
-print('----------------')
-# df1['name'] = df1['id'].map(s).fillna(df1['name']).astype(str)
+# df1=pd.DataFrame({'id':[1,2,3],'name':['Andy1','Jacky1','Bruce1']})
+# df2=pd.DataFrame({'id':[1,2],'name':['Andy2','Jacky2']})
+#
+# s = df2.set_index('id')['name']
+# print('df1',df1)
+# print('----------------')
+# print('s',s)
+# print('----------------')
+# # df1['name'] = df1['id'].map(s).fillna(df1['name']).astype(str)
 # print(df1['id'].map(s))
 # print('----------------')
 # print(df1['id'].map(s).fillna(df1['name']).astype(str))
-# start_ms=time.time()
-# print('ms:',time.time()-start_ms)
-print(3/9)

@@ -240,19 +240,10 @@ f_to_use = ['user_total_orders', 'user_total_items', 'total_distinct_items',
             'UP_average_pos_in_cart', 'UP_orders_since_last',
             'UP_delta_hour_vs_last']
 
-if __name__ == '__main__':
-    read_csv()
-    deal_product_feat()
-    deal_user_feat()
-    deal_userXProduct_feat()
-    deal_train()
-    df_train,labels=feat_deal(orders_train,True)
-    print('Train_columns',df_train.columns)
+df_train,labels=feat_deal(orders_train,True)
+print('Train_columns',df_train.columns)
 
-    # 保存结果 index=False不保存index
-    df_train[f_to_use].to_csv(out_dir+'train_feat.csv',index=False)
-    np.save(out_dir+'label.npy',labels)
-    print('ok!')
-
-
-    print('ms:',time.time()-start_ms)
+# 保存结果 index=False不保存index
+df_train.to_csv(out_dir+'train_feat.csv',index=False)
+np.save(out_dir+'label.npy',labels)
+print('end_time:',time.time()-start_time)
