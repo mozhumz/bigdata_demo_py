@@ -6,10 +6,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error #均方误差
 from sklearn.metrics import mean_absolute_error #平方绝对误差
 from sklearn.metrics import r2_score#R square
+from sklearn.metrics import roc_auc_score
+from sklearn.externals import joblib
 
-IDIR = 'F:\\八斗学院\\视频\\14期正式课\\00-data//'
-df_train = pd.read_csv(IDIR + 'train_feat.csv').fillna(0.).to_sparse()
+IDIR = 'G:\\bigdata\\badou\\00-data//'
+df_train = pd.read_csv(IDIR + 'train_feat.csv').fillna(0.).astype(pd.SparseDtype("float", np.nan))
 print(df_train)
+
 labels = np.load(IDIR + 'labels.npy')
 print(labels)
 
@@ -52,3 +55,7 @@ print('Rmse : ', rmse_test)
 print('mean_absolute_error: ', mean_absolute_error(y_test, y_pred))
 print('mean_squared_error: ', mean_squared_error(y_test, y_pred))
 print('r2_score: ', r2_score(y_test, y_pred))
+
+print('train_score:',rfr.score(X_train,y_train))
+print('test_score:',rfr.score(X_test,y_test))
+joblib.dump(rfr,'randomForestRegressor.m')

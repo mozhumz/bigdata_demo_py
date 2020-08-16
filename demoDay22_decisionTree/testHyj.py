@@ -86,3 +86,11 @@ print(df1.dtypes)
 # print(df1['id'].map(s))
 # print('----------------')
 # print(df1['id'].map(s).fillna(df1['name']).astype(str))
+
+df = pd.DataFrame(np.random.randn(10000, 4))
+
+df.iloc[:9998] = np.nan
+
+sdf = df.astype(pd.SparseDtype("float", np.nan))
+
+sdf.head()
